@@ -7,6 +7,8 @@ import { performConversion } from "@/lib/engine";
 import { absoluteUrl, valuePagesAreCurated } from "@/lib/seo";
 import { conversionTitle, generateConversionMetadata, parseConversionSlug } from "@/lib/utils";
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   return getIndexableConversionSlugs()
     .slice(0, 1000)

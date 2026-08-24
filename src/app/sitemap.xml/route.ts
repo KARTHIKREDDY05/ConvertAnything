@@ -1,5 +1,7 @@
 import { absoluteUrl, getSitemapCount } from "@/lib/seo";
 
+export const dynamic = "force-static";
+
 export function GET() {
   const lastModified = "2026-08-24T00:00:00.000Z";
   const entries = Array.from({ length: getSitemapCount() }, (_, id) => {

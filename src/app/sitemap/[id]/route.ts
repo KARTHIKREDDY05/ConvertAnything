@@ -1,5 +1,8 @@
 import { getSitemapCount, sitemapEntriesForPage } from "@/lib/seo";
 
+export const dynamic = "force-static";
+export const dynamicParams = false;
+
 const escapeXml = (value: string) =>
   value
     .replace(/&/g, "&amp;")

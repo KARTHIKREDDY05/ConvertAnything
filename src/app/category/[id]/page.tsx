@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { conversionCategories, slugForConversion } from "@/lib/conversions";
 import { performConversion, formatNumber } from "@/lib/engine";
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return Object.keys(conversionCategories).map((id) => ({ id }));
 }
