@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://karthikreddy05.github.io/sitemap.xml
