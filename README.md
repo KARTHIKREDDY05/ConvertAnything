@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ConvertAnything - SEO-First Unit Conversion Website
+
+A high-performance, SEO-optimized unit conversion website built with Next.js, TypeScript, and Tailwind CSS.
+
+## Features
+
+- **12 Conversion Categories**: Length, Weight, Temperature, Area, Volume, Speed, Time, Digital Storage, Pressure, Energy, Power, and Angles
+- **Generic Conversion Engine**: Converts between any units in the same category
+- **Dynamic URL Generation**: Supports both generic converter pages and specific value conversions
+- **Automatic SEO Optimization**: Dynamic metadata, automatic sitemap, robots.txt, optimized linking
+- **Fast Performance**: Server-side rendering with minimal JavaScript
+- **Responsive Design**: Mobile-first, works on all devices
+- **No Authentication Required**: Open to all users
+- **Conversion Tables**: Common value conversions at a glance
+- **Related Conversions**: Automatic suggestions for better UX and SEO
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js 18+
+- npm, yarn, or pnpm
+
+### Installation
+
+```bash
+npm install
+```
+
+### Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## URL Patterns
 
-To learn more about Next.js, take a look at the following resources:
+- `/` - Homepage
+- `/convert/kg-to-pound` - Convert 1 kg to pounds
+- `/convert/100-kg-to-pound` - Convert 100 kg to pounds
+- `/category/length` - All length conversions
+- `/sitemap.xml` - Dynamic XML sitemap
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Conversion Categories
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Length, Weight, Temperature, Area, Volume, Speed, Time, Digital Storage, Pressure, Energy, Power, Angles
 
-## Deploy on Vercel
+## Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+src/
+├── app/              # Next.js App Router
+├── components/       # React components
+├── lib/              # Conversion logic and utilities
+└── types/            # TypeScript interfaces
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## SEO Features
+
+- Dynamic metadata for all pages
+- Automatic sitemap generation (~100,000+ URLs)
+- Internal linking system
+- Responsive design
+- Fast performance optimization
+- Open Graph tags
+- Robots.txt configuration
+
+## Deploy
+
+Works on any platform supporting Node.js 18+. Recommended: Vercel
+

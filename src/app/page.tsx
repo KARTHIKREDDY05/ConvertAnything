@@ -1,69 +1,113 @@
-import Image from "next/image";
+import Link from "next/link";
+import ConversionSearch from "@/components/ConversionSearch";
+import { conversionCategories, highValuePairs, slugForConversion } from "@/lib/conversions";
+import { getUnitLabel } from "@/lib/engine";
+
+const faqs = [
+  {
+    question: "How do I convert kg to lbs?",
+    answer:
+      "Enter the kilogram value, choose Weight, select kilograms as the from unit and pounds as the to unit, then convert. One kilogram equals 2.20462 pounds.",
+  },
+  {
+    question: "How do I convert cm to inches or feet?",
+    answer:
+      "Choose Length, enter the centimeter value, then select inches or feet as the target unit. ConvertAnything also supports value pages like 180 cm to feet.",
+  },
+  {
+    question: "How do I convert Celsius to Fahrenheit?",
+    answer:
+      "Choose Temperature, select Celsius as the from unit and Fahrenheit as the to unit. The formula is Fahrenheit = Celsius x 9/5 + 32.",
+  },
+  {
+    question: "Can I convert MB to GB and GB to MB?",
+    answer:
+      "Yes. Choose Digital Storage and select megabytes, gigabytes, kilobytes, terabytes, bytes, or bits. ConvertAnything uses binary storage units for KB, MB, GB, and TB.",
+  },
+  {
+    question: "Are all numeric conversion pages indexed?",
+    answer:
+      "No. ConvertAnything only indexes curated high-value numeric pages and keeps arbitrary number pages out of the index to avoid thin duplicate pages.",
+  },
+];
 
 export default function Home() {
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+
+      <section className="mx-auto flex min-h-[62vh] w-full max-w-5xl flex-col justify-center px-4 py-16 sm:px-6">
+        <p className="text-sm font-semibold uppercase tracking-wide text-teal-700">ConvertAnything</p>
+        <h1 className="mt-4 text-5xl font-bold tracking-normal sm:text-7xl">Convert anything</h1>
+        <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
+          Fast unit conversions with formulas, tables, reverse converters, and carefully curated value pages.
+        </p>
+        <div className="mt-9">
+          <ConversionSearch />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      <section className="border-y border-slate-200 bg-white">
+        <div className="mx-auto grid max-w-5xl gap-6 px-4 py-10 sm:px-6 md:grid-cols-3">
+          <div>
+            <h2 className="text-xl font-semibold">Categories</h2>
+            <p className="mt-2 text-sm text-slate-600">Browse unit families and all compatible pairs.</p>
+          </div>
+          <div className="md:col-span-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {Object.values(conversionCategories).map((category) => (
+              <Link
+                key={category.id}
+                href={`/category/${category.id}`}
+                className="rounded-md border border-slate-200 px-3 py-3 text-sm font-medium transition hover:border-teal-300 hover:text-teal-800"
+              >
+                {category.name}
+              </Link>
+            ))}
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+        <h2 className="text-2xl font-semibold">Popular conversions</h2>
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {highValuePairs.slice(0, 12).map(([from, to]) => (
+            <Link
+              key={`${from}-${to}`}
+              href={slugForConversion(from, to)}
+              className="rounded-md border border-slate-200 bg-white px-4 py-3 text-sm font-medium transition hover:border-teal-300 hover:text-teal-800"
+            >
+              {getUnitLabel(from)} to {getUnitLabel(to)}
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 bg-white">
+        <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+          <h2 className="text-2xl font-semibold">Unit Conversion FAQs</h2>
+          <div className="mt-5 divide-y divide-slate-200 rounded-md border border-slate-200">
+            {faqs.map((faq, index) => (
+              <details key={faq.question} className="p-4" open={index === 0}>
+                <summary className="cursor-pointer font-semibold text-slate-950">{faq.question}</summary>
+                <p className="mt-2 max-w-3xl leading-7 text-slate-600">{faq.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
