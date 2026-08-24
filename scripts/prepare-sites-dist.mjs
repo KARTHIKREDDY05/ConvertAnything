@@ -12,6 +12,7 @@ mkdirSync(clientDir, { recursive: true });
 mkdirSync(dirname(hostingTarget), { recursive: true });
 
 cpSync(hostingSource, hostingTarget);
+writeFileSync(join(distDir, ".nojekyll"), "");
 
 for (const entry of readdirSync(distDir, { withFileTypes: true })) {
   if ([".openai", "client", "server"].includes(entry.name)) {

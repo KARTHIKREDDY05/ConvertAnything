@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/clean-sites-dist.mjs",
     "build": "next build && node scripts/prepare-sites-dist.mjs",
     "start": "next start",
     "lint": "eslint"
